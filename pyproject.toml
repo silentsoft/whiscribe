@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "whiscribe"
+version = "0.1.0"
+description = "A tool with a UI that transcribes audio files into subtitles using OpenAI's Whisper."
+authors = ["silentsoft <hyesung.lee@silentsoft.org>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.9.7 || >3.9.7,<4.0"
+streamlit = "^1.39.0"
+ffmpeg-python = "^0.2.0"
+whisper-timestamped = "^1.15.6"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+
+[tool.poetry.scripts]
+whiscribe = "whiscribe.cli:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
