@@ -2,7 +2,8 @@
 
 [![Hits](https://hits.sh/github.com/silentsoft/whiscribe.svg?style=flat-square)](https://hits.sh/github.com/silentsoft/whiscribe/)
 
-**Whiscribe** is a tool that converts audio files to subtitles using OpenAI's Whisper model, with support for audio track extraction from MP4 files. The project includes features for language selection, transcription, and subtitle export in SRT format. It is built using Python and Streamlit.
+**Whiscribe** is a tool with a UI that transcribes audio files into subtitles using OpenAI's Whisper.
+The entire process, including audio processing and transcription, runs completely locally on your machine, ensuring privacy and security for your audio data.
 
 ![Whiscribe](.document/app.png)
 
@@ -50,7 +51,7 @@
    ```
 
 2. Open your browser:
-    - The app will run at http://localhost:8501. Upload an audio file, select your options, and generate subtitles!
+    - The app will run at http://localhost:8501. Select an audio file and generate subtitles!
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
