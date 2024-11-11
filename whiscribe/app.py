@@ -10,7 +10,7 @@ from srt import convert_segments_to_srt
 st.title("Whiscribe")
 st.subheader("Audio to Subtitles")
 
-model_size = st.selectbox("Select Whisper Model", ["tiny", "base", "small", "medium", "large"], index=3)
+model_size = st.selectbox("Select Whisper Model", ["tiny", "base", "small", "medium", "large", "turbo"], index=5)
 
 system_language_code, _ = locale.getdefaultlocale()
 system_language_code = system_language_code.split('_')[0] if system_language_code else "en"
