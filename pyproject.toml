@@ -10,6 +10,7 @@ python = ">=3.9,<3.9.7 || >3.9.7,<4.0"
 streamlit = "^1.39.0"
 ffmpeg-python = "^0.2.0"
 whisper-timestamped = "^1.15.6"
+setuptools-rust = "^1.10.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"
