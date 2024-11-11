@@ -33,7 +33,7 @@
 
 1. Clone the repository:
    ```shell
-   $ git clone https://github.com/yourusername/whiscribe.git
+   $ git clone https://github.com/silentsoft/whiscribe.git
    $ cd whiscribe
    ```
 
