@@ -2,7 +2,7 @@
 
 [![Hits](https://hits.sh/github.com/silentsoft/whiscribe.svg?style=flat-square)](https://hits.sh/github.com/silentsoft/whiscribe/)
 
-**Whiscribe** is a tool with a UI that transcribes audio files into subtitles using OpenAI's Whisper.
+**Whiscribe** is a tool with a UI that transcribes audio files into subtitles in SRT format using OpenAI's Whisper.
 The entire process, including audio processing and transcription, runs completely on your local machine, ensuring privacy and security for your audio data.
 
 ![Whiscribe](.document/app.png)
