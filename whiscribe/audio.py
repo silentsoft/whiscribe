@@ -8,7 +8,13 @@ def get_audio_tracks(file_path):
     return audio_tracks
 
 
-def extract_audio_track(file_path, track_index, output_format="mp3"):
+def extract_audio_track(file_path, track_index, output_format="ogg"):
     output_file = tempfile.NamedTemporaryFile(delete=False, suffix=f".{output_format}")
-    ffmpeg.input(file_path).output(output_file.name, map=f"0:a:{track_index}").overwrite_output().run()
+    config = {
+        "map": f"0:a:{track_index}",
+        "ar": "24000",
+        "b:a": "32k",
+        "c:a": "libopus"
+    }
+    ffmpeg.input(file_path).output(output_file.name, **config).overwrite_output().run()
     return output_file.name

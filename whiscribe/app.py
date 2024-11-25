@@ -50,7 +50,7 @@ if selected_audio_file is not None:
         run = st.button("Generate", use_container_width=True)
         if run:
             with st.spinner("Extracting audio tracks"):
-                audio_file_path = extract_audio_track(temp_file_path, selected_index, output_format="mp3")
+                audio_file_path = extract_audio_track(temp_file_path, selected_index)
 
             transcriber = load_transcriber(model_size)
             with st.spinner("Generating subtitles"):
