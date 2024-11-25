@@ -40,11 +40,12 @@ if selected_audio_file is not None:
     if audio_tracks:
         selected_index = 0
         if len(audio_tracks) > 1:
-            track_options = [
-                f"Track {i + 1}: {track['codec_name']} ({track['tags'].get('language', 'unknown')})"
-                for i, track in enumerate(audio_tracks)]
-            selected_track = st.radio("Select an audio track to extract", track_options)
-            selected_index = track_options.index(selected_track)
+            tracks = [
+                f"Track {i + 1}: {track['codec_name']}"
+                for i, track in enumerate(audio_tracks)
+            ]
+            selected_track = st.selectbox("Select an audio track to extract", tracks, index=0)
+            selected_index = tracks.index(selected_track)
 
         run = st.button("Generate", use_container_width=True)
         if run:
