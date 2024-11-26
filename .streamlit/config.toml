@@ -1,2 +1,5 @@
 [server]
-maxUploadSize=100000
+maxUploadSize = 100000
+
+[client]
+toolbarMode = "viewer"
