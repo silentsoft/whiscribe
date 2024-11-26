@@ -61,6 +61,6 @@ if selected_audio_file is not None:
 
             st.success("Subtitles generated successfully!")
             st.download_button(f"Download {selected_audio_file.name}.srt", data=srt_content,
-                               file_name=f"{selected_audio_file.name}.srt")
+                               file_name=f"{selected_audio_file.name}.srt", use_container_width=True)
     else:
         st.error("No audio tracks found in the file.")
