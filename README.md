@@ -9,8 +9,8 @@ The entire process, including audio processing and transcription, runs completel
 
 ## Features
 
-- **Audio Transcription**: Convert audio files (MP3, WAV, MP4) to text using the Whisper model.
-- **Audio Track Extraction**: Extract and convert audio tracks from MP4 files using FFmpeg.
+- **Audio Transcription**: Convert audio files to text using the Whisper model.
+- **Audio Track Extraction**: Extract and convert audio tracks using FFmpeg.
 - **Subtitle Export**: Generate subtitles in SRT format and download them directly.
 - Simple user interface built with Streamlit
 

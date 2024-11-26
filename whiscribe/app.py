@@ -33,7 +33,7 @@ default_language_index = list(tokenizer.LANGUAGES.keys()).index(system_language_
 language_name = st.selectbox("Select Whisper Language", list(tokenizer.LANGUAGES.values()), index=default_language_index)
 language_code = tokenizer.TO_LANGUAGE_CODE[language_name]
 
-selected_audio_file = st.file_uploader("Select an audio file (mp3, wav, mp4)", type=["mp3", "wav", "mp4"])
+selected_audio_file = st.file_uploader("Select an audio file")
 if selected_audio_file is not None:
     temp_file_path = copy_file_to_temp_dir(selected_audio_file)
     audio_tracks = get_audio_tracks(temp_file_path)
