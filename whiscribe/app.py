@@ -62,7 +62,7 @@ if selected_audio_file is not None:
                 srt_content = convert_segments_to_srt(segments)
 
             st.text_area("Generated Subtitles", value=srt_content, height=280)
-            st.success("Subtitles generated successfully!")
+            st.toast("Subtitles generated successfully!")
             st.download_button(f"Download {selected_audio_file.name}.srt", data=srt_content,
                                file_name=f"{selected_audio_file.name}.srt", use_container_width=True)
     else:
