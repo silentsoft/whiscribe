@@ -30,6 +30,15 @@ def load_transcriber(_model_size):
     return Transcriber(_model_size)
 
 
+st.set_page_config(
+    page_title="Whiscribe",
+    menu_items={
+        "Report a bug": "https://github.com/silentsoft/whiscribe/issues",
+        "About": "- Author: [silentsoft](https://github.com/silentsoft)\n"
+                 "- Source Code: [GitHub](https://github.com/silentsoft/whiscribe)"
+    }
+)
+
 st.title("Whiscribe")
 st.subheader("Audio to Subtitles")
 
