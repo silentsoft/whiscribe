@@ -45,12 +45,17 @@ The entire process, including audio processing and transcription, runs completel
 
 ## Usage
 
-1. Run the app:
+1. Activate the `Poetry` virtual environment:
+   ```shell
+   $ poetry shell
+   ```
+
+2. Run the app:
    ```shell
    $ whiscribe
    ```
 
-2. Open your browser:
+3. Open your browser:
     - The app will run at http://localhost:8501. Select an audio file and generate subtitles!
 
 ## Contributing
