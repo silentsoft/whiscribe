@@ -59,11 +59,13 @@ if selected_audio_file is not None:
             with st.spinner("Generating subtitles..."):
                 audio_file_path = extracted_tracks[selected_index][1]
                 segments = transcriber.transcribe(audio_file_path, language_code)
-                srt_content = convert_segments_to_srt(segments)
+                st.session_state["srt_content"] = convert_segments_to_srt(segments)
+                st.toast("Subtitles generated successfully!")
 
-            st.text_area("Generated Subtitles", value=srt_content, height=280)
-            st.toast("Subtitles generated successfully!")
-            st.download_button(f"Download {selected_audio_file.name}.srt", data=srt_content,
+        if "srt_content" in st.session_state:
+            edited_srt_content = st.text_area("Generated Subtitles", value=st.session_state["srt_content"], height=280)
+            st.session_state["srt_content"] = edited_srt_content
+            st.download_button(f"Download {selected_audio_file.name}.srt", data=edited_srt_content,
                                file_name=f"{selected_audio_file.name}.srt", use_container_width=True)
     else:
         st.error("No audio tracks found in the file.")
