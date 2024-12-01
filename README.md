@@ -10,9 +10,10 @@ The entire process, including audio processing and transcription, runs completel
 ## Features
 
 - **Audio Transcription**: Convert audio files to text using the Whisper model.
-- **Audio Track Extraction**: Extract and convert audio tracks using FFmpeg.
-- **Subtitle Export**: Generate subtitles in SRT format and download them directly.
-- Simple user interface built with Streamlit
+- **Audio Track Preview**: Preview and select audio tracks before transcription.
+- **Word Hint Support**: Improve subtitle accuracy with custom word hints for domain-specific terms or uncommon vocabulary.
+- **Subtitle Export**: Generate and download subtitles in SRT format.
+- **User-Friendly Interface**: Built with Streamlit for ease of use.
 
 ## Prerequisites
 
