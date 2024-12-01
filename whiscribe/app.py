@@ -62,12 +62,18 @@ if selected_audio_file is not None:
         selected_index = tracks.index(selected_track)
         st.audio(extracted_tracks[selected_index][1])
 
+        word_hints = st.text_input("Enter word hints", placeholder="Comma-separated word hints for precise generation")
+        hints = list(filter(None, map(str.strip, word_hints.split(","))))
+        if hints:
+            st.pills("Hints", hints, disabled=True, label_visibility="collapsed")
+        prompt = ", ".join(hints) if hints else None
+
         run = st.button("Generate", use_container_width=True)
         if run:
             transcriber = load_transcriber(model_size)
             with st.spinner("Generating subtitles..."):
                 audio_file_path = extracted_tracks[selected_index][1]
-                segments = transcriber.transcribe(audio_file_path, language_code)
+                segments = transcriber.transcribe(audio_file_path, language=language_code, initial_prompt=prompt)
                 st.session_state["srt_content"] = convert_segments_to_srt(segments)
                 st.toast("Subtitles generated successfully!")
 
