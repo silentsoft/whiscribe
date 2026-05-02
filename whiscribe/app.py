@@ -9,6 +9,7 @@ from whiscribe.transcriber import Transcriber
 from whiscribe.audio import get_audio_tracks, extract_audio_track
 from whiscribe.srt import convert_segments_to_srt
 from whiscribe.version import version
+from whiscribe.logo import svg_logo
 
 BG_COLOR = "#0B0D17"  # Deep space dark background
 SURFACE_COLOR = "#151821"  # Slightly lighter for panels/sidebar
@@ -281,6 +282,8 @@ def main(page: ft.Page):
             srt_editor.value = state["srt_content"]
             srt_editor.read_only = False
             save_button.visible = True
+
+            show_message("Transcription Completed!")
         except Exception as ex:
             show_error(f"Error: {str(ex)}")
         finally:
@@ -288,6 +291,7 @@ def main(page: ft.Page):
             transcribe_button.content.content = ft.Text("Transcribe", size=14, font_family="Inter-SemiBold",
                                                    color=ft.Colors.WHITE)
             transcribe_button.style.mouse_cursor = ft.MouseCursor.CLICK
+            page.update()
 
     transcribe_button = ft.Button(
         content=ft.Container(
@@ -308,10 +312,15 @@ def main(page: ft.Page):
 
     sidebar_content = ft.Container(
         content=ft.Column([
-            ft.Container(height=10),
+            ft.Container(height=15),
             ft.Row([
+                ft.Container(
+                    content=ft.Image(src=svg_logo),
+                    width=48, height=48,
+                    alignment=ft.Alignment.CENTER
+                ),
                 ft.Text("Whiscribe", size=22, font_family="Inter-SemiBold", color=TEXT_PRIMARY)
-            ], alignment=ft.MainAxisAlignment.START, spacing=15),
+            ], alignment=ft.MainAxisAlignment.START, spacing=7),
             ft.Container(height=20),
             ft.Text("CONFIGURATION", size=11, font_family="Inter-SemiBold", color=TEXT_SECONDARY),
             ft.Container(height=10),
