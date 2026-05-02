@@ -10,10 +10,8 @@ The entire process, including audio processing and transcription, runs completel
 ## Features
 
 - **Audio Transcription**: Convert audio files to text using the Whisper model.
-- **Audio Track Preview**: Preview and select audio tracks before transcription.
 - **Word Hint Support**: Improve subtitle accuracy with custom word hints for domain-specific terms or uncommon vocabulary.
-- **Subtitle Export**: Generate and download subtitles in SRT format.
-- **User-Friendly Interface**: Built with Streamlit for ease of use.
+- **Subtitle Export**: Generate and save as subtitles in SRT format.
 
 ## Prerequisites
 
@@ -55,9 +53,6 @@ The entire process, including audio processing and transcription, runs completel
    ```shell
    $ whiscribe
    ```
-
-3. Open your browser:
-    - The app will run at http://localhost:8501. Select an audio file and generate subtitles!
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
