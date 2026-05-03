@@ -2,9 +2,12 @@ import os
 import sys
 import subprocess
 
+import flet as ft
+from main import main
+
 
 def launch():
-    subprocess.run(["flet", "run"])
+    ft.run(main)
 
 
 def get_version_from_pyproject():
@@ -21,7 +24,7 @@ def build():
     print(f"Detected version: {version}")
 
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    version_file = os.path.join(current_dir, "version.py")
+    version_file = os.path.join(current_dir, "whiscribe", "version.py")
     with open(version_file, "w", encoding="utf-8") as f:
         f.write(f'version = "{version}"\n')
     print(f"Updated {version_file} with version {version}")

@@ -15,8 +15,8 @@ whisper-timestamped = "^1.15.9"
 pytest = "^8.3.3"
 
 [tool.poetry.scripts]
-whiscribe = "whiscribe.cli:launch"
-build = "whiscribe.cli:build"
+whiscribe = "cli:launch"
+build = "cli:build"
 
 [tool.flet]
 product = "Whiscribe"
@@ -29,9 +29,14 @@ copyright = "Copyright © silentsoft.org"
 [tool.flet.macos]
 target_arch = ["arm64"]
 
+[tool.flet.macos.app]
+exclude = ["__pycache__", "whiscribe/__pycache__", "cli.py", "bin/ffmpeg.exe", "bin/ffprobe.exe"]
+
+[tool.flet.windows.app]
+exclude = ["__pycache__", "whiscribe/__pycache__", "cli.py", "bin/ffmpeg", "bin/ffprobe"]
+
 [tool.flet.app]
-path = "whiscribe"
-exclude = ["__pycache__", "cli.py"]
+path = "src"
 
 [build-system]
 requires = ["poetry-core"]

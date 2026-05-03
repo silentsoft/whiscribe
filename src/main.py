@@ -3,44 +3,16 @@ import asyncio
 import locale
 import os
 import sys
-import shutil
+import stat
 import flet as ft
 from whisper import tokenizer
 
+from whiscribe.transcriber import Transcriber
+from whiscribe.audio import get_audio_tracks, extract_audio_track
+from whiscribe.srt import convert_segments_to_srt
+from whiscribe.version import version
+from whiscribe.logo import svg_logo
 
-def patch_environ():
-    path_list = os.environ.get("PATH", "").split(os.pathsep)
-    updated = False
-
-    platform_name = sys.platform
-    if platform_name.startswith("darwin"):
-        common_paths = [
-            "/opt/homebrew/bin",  # Apple Silicon
-            "/usr/local/bin",     # Intel
-        ]
-    elif platform_name.startswith("win"):
-        common_paths = [
-            os.path.join(os.environ.get("ProgramData", "C:\\ProgramData"), "chocolatey", "bin"),
-            os.path.join(os.path.expanduser("~"), "scoop", "shims"),
-        ]
-    else:
-        common_paths = []
-
-    for p in common_paths:
-        if os.path.exists(p) and p not in path_list:
-            path_list.insert(0, p)
-            updated = True
-
-    if updated:
-        os.environ["PATH"] = os.pathsep.join(path_list)
-
-patch_environ()
-
-from transcriber import Transcriber
-from audio import get_audio_tracks, extract_audio_track
-from srt import convert_segments_to_srt
-from version import version
-from logo import svg_logo
 
 BG_COLOR = "#0B0D17"  # Deep space dark background
 SURFACE_COLOR = "#151821"  # Slightly lighter for panels/sidebar
@@ -51,7 +23,35 @@ BORDER_COLOR = "#2D334D"
 ACCENT_PRIMARY = "#6366F1"  # Indigo
 
 
+def patch_environ():
+    path_list = os.environ.get("PATH", "").split(os.pathsep)
+    updated = False
+
+    # Add bundled bin directory to PATH
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    bundled_bin = os.path.join(base_dir, "bin")
+    if os.path.exists(bundled_bin):
+        # Ensure execution permissions (+x) for ffmpeg and ffprobe on macOS/Linux
+        if not sys.platform.startswith("win"):
+            for tool in ["ffmpeg", "ffprobe"]:
+                tool_path = os.path.join(bundled_bin, tool)
+                if os.path.exists(tool_path):
+                    st = os.stat(tool_path)
+                    # Check if user execute bit is missing
+                    if not (st.st_mode & stat.S_IXUSR):
+                        os.chmod(tool_path, st.st_mode | stat.S_IXUSR)
+
+        if bundled_bin not in path_list:
+            path_list.insert(0, bundled_bin)
+            updated = True
+
+    if updated:
+        os.environ["PATH"] = os.pathsep.join(path_list)
+
+
 def main(page: ft.Page):
+    patch_environ()
+
     page.title = "Whiscribe"
     page.window.title_bar_hidden = True
     page.window.title_bar_buttons_hidden = False
@@ -62,36 +62,12 @@ def main(page: ft.Page):
     page.window_resizable = True
     page.padding = 0
     page.spacing = 0
-
     page.fonts = {
         "Inter": "https://raw.githubusercontent.com/rsms/inter/master/docs/font-files/Inter-Regular.woff2",
         "Inter-Medium": "https://raw.githubusercontent.com/rsms/inter/master/docs/font-files/Inter-Medium.woff2",
         "Inter-SemiBold": "https://raw.githubusercontent.com/rsms/inter/master/docs/font-files/Inter-SemiBold.woff2",
     }
     page.theme = ft.Theme(font_family="Inter")
-
-    # Check for FFmpeg/FFprobe availability
-    if not shutil.which("ffmpeg") or not shutil.which("ffprobe"):
-        page.show_dialog(
-            ft.AlertDialog(
-                modal=True,
-                title=ft.Row([
-                    ft.Icon(ft.Icons.WARNING_ROUNDED, color=ft.Colors.AMBER_400),
-                    ft.Text("FFmpeg Not Found")
-                ], spacing=10),
-                content=ft.Text(
-                    "Whiscribe requires FFmpeg.\n\n"
-                    "Please install it and restart the application:\n"
-                    "- macOS: brew install ffmpeg\n"
-                    "- Windows: choco install ffmpeg",
-                    size=13
-                ),
-                actions=[
-                    ft.TextButton("Open Download Page", url="https://ffmpeg.org/download.html")
-                ],
-                actions_alignment=ft.MainAxisAlignment.END,
-            )
-        )
 
     state = {
         "selected_file_path": None,
