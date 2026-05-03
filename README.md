@@ -18,9 +18,10 @@ The entire process, including audio processing and transcription, runs completel
 
 ## Prerequisites
 
-1. Install `ffmpeg`:
-   - **macOS**: `brew install ffmpeg`
-   - **Windows**: Install from [FFmpeg download page](https://ffmpeg.org/download.html)
+1. Install Git LFS
+   ```shell
+   $ brew install git-lfs
+   ```
 
 2. Install `Poetry`
    ```shell
@@ -43,9 +44,14 @@ The entire process, including audio processing and transcription, runs completel
 ## Usage
 
 1. Activate the `Poetry` virtual environment:
-   ```shell
-   $ poetry shell
-   ```
+   - `Poetry` version < 2.0.0
+     ```shell
+     $ poetry shell
+     ```
+   - `Poetry` version >= 2.0.0
+     ```shell
+     $ poetry env activate
+     ```
 
 2. Run the app:
    ```shell
