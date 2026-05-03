@@ -2,8 +2,39 @@ from datetime import datetime
 import asyncio
 import locale
 import os
+import sys
+import shutil
 import flet as ft
 from whisper import tokenizer
+
+
+def patch_environ():
+    path_list = os.environ.get("PATH", "").split(os.pathsep)
+    updated = False
+
+    platform_name = sys.platform
+    if platform_name.startswith("darwin"):
+        common_paths = [
+            "/opt/homebrew/bin",  # Apple Silicon
+            "/usr/local/bin",     # Intel
+        ]
+    elif platform_name.startswith("win"):
+        common_paths = [
+            os.path.join(os.environ.get("ProgramData", "C:\\ProgramData"), "chocolatey", "bin"),
+            os.path.join(os.path.expanduser("~"), "scoop", "shims"),
+        ]
+    else:
+        common_paths = []
+
+    for p in common_paths:
+        if os.path.exists(p) and p not in path_list:
+            path_list.insert(0, p)
+            updated = True
+
+    if updated:
+        os.environ["PATH"] = os.pathsep.join(path_list)
+
+patch_environ()
 
 from transcriber import Transcriber
 from audio import get_audio_tracks, extract_audio_track
@@ -38,6 +69,29 @@ def main(page: ft.Page):
         "Inter-SemiBold": "https://raw.githubusercontent.com/rsms/inter/master/docs/font-files/Inter-SemiBold.woff2",
     }
     page.theme = ft.Theme(font_family="Inter")
+
+    # Check for FFmpeg/FFprobe availability
+    if not shutil.which("ffmpeg") or not shutil.which("ffprobe"):
+        page.show_dialog(
+            ft.AlertDialog(
+                modal=True,
+                title=ft.Row([
+                    ft.Icon(ft.Icons.WARNING_ROUNDED, color=ft.Colors.AMBER_400),
+                    ft.Text("FFmpeg Not Found")
+                ], spacing=10),
+                content=ft.Text(
+                    "Whiscribe requires FFmpeg.\n\n"
+                    "Please install it and restart the application:\n"
+                    "- macOS: brew install ffmpeg\n"
+                    "- Windows: choco install ffmpeg",
+                    size=13
+                ),
+                actions=[
+                    ft.TextButton("Open Download Page", url="https://ffmpeg.org/download.html")
+                ],
+                actions_alignment=ft.MainAxisAlignment.END,
+            )
+        )
 
     state = {
         "selected_file_path": None,
