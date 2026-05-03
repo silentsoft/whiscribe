@@ -10,7 +10,6 @@ python = ">=3.10,<4.0"
 flet = {extras = ["all"], version = "^0.84.0"}
 ffmpeg-python = "^0.2.0"
 whisper-timestamped = "^1.15.6"
-setuptools-rust = "^1.10.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"
@@ -19,9 +18,20 @@ pytest = "^8.3.3"
 whiscribe = "whiscribe.cli:launch"
 build = "whiscribe.cli:build"
 
+[tool.flet]
+product = "Whiscribe"
+artifact = "Whiscribe"
+org = "org.silentsoft"
+bundle_id = "org.silentsoft.whiscribe"
+company = "silentsoft.org."
+copyright = "Copyright © silentsoft.org"
+
+[tool.flet.macos]
+target_arch = ["arm64"]
+
 [tool.flet.app]
 path = "whiscribe"
-module = "app"
+exclude = ["__pycache__", "cli.py"]
 
 [build-system]
 requires = ["poetry-core"]

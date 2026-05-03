@@ -5,11 +5,11 @@ import os
 import flet as ft
 from whisper import tokenizer
 
-from whiscribe.transcriber import Transcriber
-from whiscribe.audio import get_audio_tracks, extract_audio_track
-from whiscribe.srt import convert_segments_to_srt
-from whiscribe.version import version
-from whiscribe.logo import svg_logo
+from transcriber import Transcriber
+from audio import get_audio_tracks, extract_audio_track
+from srt import convert_segments_to_srt
+from version import version
+from logo import svg_logo
 
 BG_COLOR = "#0B0D17"  # Deep space dark background
 SURFACE_COLOR = "#151821"  # Slightly lighter for panels/sidebar

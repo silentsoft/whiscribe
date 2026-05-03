@@ -1,12 +1,10 @@
 import os
 import sys
 import subprocess
-import flet as ft
-from whiscribe.app import main
 
 
 def launch():
-    ft.run(main)
+    subprocess.run(["flet", "run"])
 
 
 def get_version_from_pyproject():
@@ -30,9 +28,9 @@ def build():
 
     platform_name = sys.platform
     if platform_name.startswith("darwin"):
-        cmd = ["flet", "build", "macos"]
+        cmd = ["flet", "build", "macos", "--verbose"]
     elif platform_name.startswith("win"):
-        cmd = ["flet", "build", "windows"]
+        cmd = ["flet", "build", "windows", "--verbose"]
     else:
         print(f"Unsupported platform: {platform_name}")
         sys.exit(1)
