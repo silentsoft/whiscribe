@@ -18,16 +18,11 @@ The entire process, including audio processing and transcription, runs completel
 
 ## Prerequisites
 
-1. Install Rust
-   ```shell
-   $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-   ```
-
-2. Install `ffmpeg`:
+1. Install `ffmpeg`:
    - **macOS**: `brew install ffmpeg`
    - **Windows**: Install from [FFmpeg download page](https://ffmpeg.org/download.html)
 
-3. Install `Poetry`
+2. Install `Poetry`
    ```shell
    $ curl -sSL https://install.python-poetry.org | python3 -
    ```
