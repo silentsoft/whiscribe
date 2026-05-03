@@ -2656,4 +2656,4 @@ vad-silero = ["onnxruntime", "torchaudio"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "55570751f417307d64e009fb2e1e624cb7aaffdedee9bc3f3b73769ebb0ce3cf"
+content-hash = "a402bd8b997093393b65a993866f408684f9b8172f6aa41304c6fec3473f919d"

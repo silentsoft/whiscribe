@@ -9,7 +9,7 @@ readme = "README.md"
 python = ">=3.10,<4.0"
 flet = {extras = ["all"], version = "^0.84.0"}
 ffmpeg-python = "^0.2.0"
-whisper-timestamped = "^1.15.6"
+whisper-timestamped = "^1.15.9"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"
