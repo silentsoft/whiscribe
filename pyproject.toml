@@ -33,7 +33,7 @@ target_arch = ["arm64"]
 exclude = ["__pycache__", "whiscribe/__pycache__", "cli.py", "bin/ffmpeg.exe", "bin/ffprobe.exe"]
 
 [tool.flet.windows.app]
-exclude = ["__pycache__", "whiscribe/__pycache__", "cli.py", "bin/ffmpeg", "bin/ffprobe"]
+exclude = ["__pycache__", "whiscribe\\__pycache__", "cli.py", "bin\\ffmpeg", "bin\\ffprobe"]
 
 [tool.flet.app]
 path = "src"

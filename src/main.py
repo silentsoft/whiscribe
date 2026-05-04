@@ -53,7 +53,8 @@ def main(page: ft.Page):
     patch_environ()
 
     page.title = "Whiscribe"
-    page.window.title_bar_hidden = True
+    if sys.platform.startswith("darwin"):
+        page.window.title_bar_hidden = True
     page.window.title_bar_buttons_hidden = False
     page.theme_mode = ft.ThemeMode.DARK
     page.bgcolor = BG_COLOR
@@ -342,7 +343,7 @@ def main(page: ft.Page):
 
     sidebar_content = ft.Container(
         content=ft.Column([
-            ft.Container(height=15),
+            ft.Container(height=15) if sys.platform.startswith("darwin") else ft.Container(height=5),
             ft.Row([
                 ft.Container(
                     content=ft.Image(src=svg_logo),
