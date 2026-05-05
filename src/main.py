@@ -25,35 +25,7 @@ BORDER_COLOR = "#2D334D"
 ACCENT_PRIMARY = "#6366F1"  # Indigo
 
 
-def patch_environ():
-    path_list = os.environ.get("PATH", "").split(os.pathsep)
-    updated = False
-
-    # Add bundled bin directory to PATH
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    bundled_bin = os.path.join(base_dir, "bin")
-    if os.path.exists(bundled_bin):
-        # Ensure execution permissions (+x) for ffmpeg and ffprobe on macOS/Linux
-        if not sys.platform.startswith("win"):
-            for tool in ["ffmpeg", "ffprobe"]:
-                tool_path = os.path.join(bundled_bin, tool)
-                if os.path.exists(tool_path):
-                    st = os.stat(tool_path)
-                    # Check if user execute bit is missing
-                    if not (st.st_mode & stat.S_IXUSR):
-                        os.chmod(tool_path, st.st_mode | stat.S_IXUSR)
-
-        if bundled_bin not in path_list:
-            path_list.insert(0, bundled_bin)
-            updated = True
-
-    if updated:
-        os.environ["PATH"] = os.pathsep.join(path_list)
-
-
 def main(page: ft.Page):
-    patch_environ()
-
     page.title = "Whiscribe"
     if sys.platform.startswith("darwin"):
         page.window.title_bar_hidden = True
@@ -428,27 +400,56 @@ def main(page: ft.Page):
 
 def prepare_environment():
     """Prepare the runtime environment for cross-platform execution."""
-    # Essential for packaged apps (.exe, .app)
-    multiprocessing.freeze_support()
+    def patch_window():
+        # Essential for packaged apps (.exe, .app)
+        multiprocessing.freeze_support()
 
-    if sys.platform.startswith("win"):
-        # Prevent CMD window from popping up
-        _original_popen = subprocess.Popen
-        def _patched_popen(*args, **kwargs):
-            if "startupinfo" not in kwargs:
-                si = subprocess.STARTUPINFO()
-                si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-                kwargs["startupinfo"] = si
-            if "creationflags" not in kwargs:
-                kwargs["creationflags"] = 0x08000000 # CREATE_NO_WINDOW
-            return _original_popen(*args, **kwargs)
-        subprocess.Popen = _patched_popen
-    else:
-        try:
-            # Prevent duplicate Flet window
-            multiprocessing.set_start_method('fork', force=True)
-        except RuntimeError:
-            pass
+        if sys.platform.startswith("win"):
+            # Prevent CMD window from popping up
+            _original_popen = subprocess.Popen
+            def _patched_popen(*args, **kwargs):
+                if "startupinfo" not in kwargs:
+                    si = subprocess.STARTUPINFO()
+                    si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                    kwargs["startupinfo"] = si
+                if "creationflags" not in kwargs:
+                    kwargs["creationflags"] = 0x08000000 # CREATE_NO_WINDOW
+                return _original_popen(*args, **kwargs)
+            subprocess.Popen = _patched_popen
+        else:
+            try:
+                # Prevent duplicate Flet window
+                multiprocessing.set_start_method('fork', force=True)
+            except RuntimeError:
+                pass
+
+    def patch_environ():
+        path_list = os.environ.get("PATH", "").split(os.pathsep)
+        updated = False
+
+        # Add bundled bin directory to PATH
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        bundled_bin = os.path.join(base_dir, "bin")
+        if os.path.exists(bundled_bin):
+            # Ensure execution permissions (+x) for ffmpeg and ffprobe on macOS/Linux
+            if not sys.platform.startswith("win"):
+                for tool in ["ffmpeg", "ffprobe"]:
+                    tool_path = os.path.join(bundled_bin, tool)
+                    if os.path.exists(tool_path):
+                        st = os.stat(tool_path)
+                        # Check if user execute bit is missing
+                        if not (st.st_mode & stat.S_IXUSR):
+                            os.chmod(tool_path, st.st_mode | stat.S_IXUSR)
+
+            if bundled_bin not in path_list:
+                path_list.insert(0, bundled_bin)
+                updated = True
+
+        if updated:
+            os.environ["PATH"] = os.pathsep.join(path_list)
+
+    patch_window()
+    patch_environ()
 
 
 if __name__ == "__main__":
