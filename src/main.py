@@ -121,15 +121,24 @@ async def main(page: ft.Page):
             save_button.visible = False
             transcribe_button.disabled = True
             post_selection_area.visible = True
+            
+            # Show loading state on browse button
+            browse_button.disabled = True
+            browse_button.content = ft.Row([
+                ft.ProgressRing(width=16, height=16, stroke_width=2, color=TEXT_PRIMARY),
+                ft.Text("Processing...", size=14, font_family="Inter-Medium", color=TEXT_PRIMARY)
+            ], alignment=ft.MainAxisAlignment.CENTER)
+            browse_button.style.mouse_cursor = ft.MouseCursor.NO_DROP
             page.update()
 
             # Extract Tracks
             try:
-                audio_tracks = get_audio_tracks(state["selected_file_path"])
+                loop = asyncio.get_event_loop()
+                audio_tracks = await loop.run_in_executor(None, lambda: get_audio_tracks(state["selected_file_path"]))
                 if audio_tracks:
                     extracted = []
                     for i, track in enumerate(audio_tracks):
-                        path = extract_audio_track(state["selected_file_path"], i)
+                        path = await loop.run_in_executor(None, lambda i=i: extract_audio_track(state["selected_file_path"], i))
                         extracted.append((track, path))
                     state["extracted_tracks"] = extracted
 
@@ -146,12 +155,22 @@ async def main(page: ft.Page):
                     show_error("No audio tracks found!")
             except Exception as ex:
                 show_error(f"Error: {str(ex)}")
-
-            page.update()
+            finally:
+                # Restore browse button state
+                browse_button.disabled = False
+                browse_button.content = ft.Row([
+                    ft.Icon(ft.Icons.FOLDER_OPEN, color=TEXT_PRIMARY, size=18),
+                    ft.Text("Browse File", size=14, font_family="Inter-Medium", color=TEXT_PRIMARY)
+                ], alignment=ft.MainAxisAlignment.CENTER)
+                browse_button.style.mouse_cursor = ft.MouseCursor.CLICK
+                page.update()
 
     browse_button = ft.Button(
-        "Browse File",
-        icon=ft.Icons.FOLDER_OPEN,
+        content=ft.Row([
+            ft.Icon(ft.Icons.FOLDER_OPEN, color=TEXT_PRIMARY, size=18),
+            ft.Text("Browse File", size=14, font_family="Inter-Medium", color=TEXT_PRIMARY)
+        ], alignment=ft.MainAxisAlignment.CENTER),
+        width=165,
         style=ft.ButtonStyle(
             color=TEXT_PRIMARY,
             bgcolor="#24283B",
