@@ -38,6 +38,10 @@ exclude = ["__pycache__", "whiscribe\\__pycache__", "cli.py", "bin\\ffmpeg", "bi
 [tool.flet.app]
 path = "src"
 
+[tool.flet.app.startup_screen]
+show = true
+message = "Initializing..."
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
