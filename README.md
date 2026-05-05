@@ -55,7 +55,7 @@ The entire process, including audio processing and transcription, runs completel
 
 2. Run the app:
    ```shell
-   $ whiscribe
+   $ poetry run whiscribe
    ```
 
 ## Contributing
