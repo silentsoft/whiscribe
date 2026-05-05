@@ -1,3 +1,5 @@
+import multiprocessing
+import subprocess
 from datetime import datetime
 import asyncio
 import locale
@@ -424,5 +426,31 @@ def main(page: ft.Page):
     )
 
 
+def prepare_environment():
+    """Prepare the runtime environment for cross-platform execution."""
+    # Essential for packaged apps (.exe, .app)
+    multiprocessing.freeze_support()
+
+    if sys.platform.startswith("win"):
+        # Prevent CMD window from popping up
+        _original_popen = subprocess.Popen
+        def _patched_popen(*args, **kwargs):
+            if "startupinfo" not in kwargs:
+                si = subprocess.STARTUPINFO()
+                si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                kwargs["startupinfo"] = si
+            if "creationflags" not in kwargs:
+                kwargs["creationflags"] = 0x08000000 # CREATE_NO_WINDOW
+            return _original_popen(*args, **kwargs)
+        subprocess.Popen = _patched_popen
+    else:
+        try:
+            # Prevent duplicate Flet window
+            multiprocessing.set_start_method('fork', force=True)
+        except RuntimeError:
+            pass
+
+
 if __name__ == "__main__":
+    prepare_environment()
     ft.run(main)
