@@ -13,6 +13,7 @@ from whiscribe.audio import get_audio_tracks, extract_audio_track
 from whiscribe.srt import convert_segments_to_srt
 from whiscribe.version import version
 from whiscribe.logo import svg_logo
+from whiscribe.hits import count_launch, count_transcribe
 
 
 BG_COLOR = "#0B0D17"  # Deep space dark background
@@ -307,6 +308,7 @@ async def main(page: ft.Page):
             save_button.visible = True
 
             show_message("Transcription Completed!")
+            count_transcribe()
         except Exception as ex:
             show_error(f"Error: {str(ex)}")
         finally:
@@ -414,6 +416,8 @@ async def main(page: ft.Page):
             spacing=0,
         )
     )
+
+    count_launch()
 
 
 def prepare_environment():
