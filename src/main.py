@@ -2,7 +2,6 @@ import multiprocessing
 import subprocess
 from datetime import datetime
 import asyncio
-import locale
 import os
 import sys
 import stat
@@ -25,7 +24,7 @@ BORDER_COLOR = "#2D334D"
 ACCENT_PRIMARY = "#6366F1"  # Indigo
 
 
-def main(page: ft.Page):
+async def main(page: ft.Page):
     page.title = "Whiscribe"
     if sys.platform.startswith("darwin"):
         page.window.title_bar_hidden = True
@@ -77,8 +76,8 @@ def main(page: ft.Page):
         label_style=ft.TextStyle(color=TEXT_SECONDARY)
     )
 
-    system_language_code, _ = locale.getdefaultlocale()
-    system_language_code = system_language_code.split('_')[0] if system_language_code else "en"
+    system_locales = (await page.get_device_info()).locales
+    system_language_code = system_locales[0].language_code if system_locales else "en"
     if system_language_code not in tokenizer.LANGUAGES:
         system_language_code = "en"
 
