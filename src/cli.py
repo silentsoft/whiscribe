@@ -3,10 +3,13 @@ import sys
 import subprocess
 
 import flet as ft
+
+from main import prepare_environment
 from main import main
 
 
 def launch():
+    prepare_environment()
     ft.run(main)
 
 
