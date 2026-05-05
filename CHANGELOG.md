@@ -1,14 +1,9 @@
-<h1 align="center">
-  <img src=".document/logo.svg" width="96"/><br/>
-  <a href="https://hits.sh/github.com/silentsoft/whiscribe/"><img alt="Hits" src="https://hits.sh/github.com/silentsoft/whiscribe.svg?style=flat-square"/></a><br/>
-  Whiscribe
-</h1>
-<h4 align="center">
-  <b>Whiscribe</b> is a tool with a UI that transcribes audio files into subtitles in SRT format using OpenAI's Whisper.
-The entire process, including audio processing and transcription, runs completely on your local machine, ensuring privacy and security for your audio data.
-</h4>
+# 1.0.0 (06 May 2026)
 
-![Whiscribe](.document/app.png)
+**Whiscribe** is a tool with a UI that transcribes audio files into subtitles in SRT format using OpenAI's Whisper.
+The entire process, including audio processing and transcription, runs completely on your local machine, ensuring privacy and security for your audio data.
+
+![](https://raw.githubusercontent.com/silentsoft/whiscribe/refs/tags/v1.0.0/.document/app.png)
 
 ## Features
 
@@ -62,11 +57,3 @@ The entire process, including audio processing and transcription, runs completel
 ```shell
 $ poetry run package
 ```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please note we have a [CODE_OF_CONDUCT](https://github.com/silentsoft/whiscribe/blob/main/CODE_OF_CONDUCT.md), please follow it in all your interactions with the project.
-
-## License
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/silentsoft/whiscribe/blob/main/LICENSE.txt) file for details.

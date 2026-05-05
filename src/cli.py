@@ -112,7 +112,7 @@ def generate_notice():
         print(f"Warning: Failed to generate NOTICE.md: {e}")
 
 
-def build():
+def package():
     update_version()
     generate_notice()
 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "whiscribe"
-version = "0.2.0"
+version = "1.0.0"
 description = "A tool with a UI that transcribes audio files into subtitles using OpenAI's Whisper."
 authors = ["silentsoft <hyesung.lee@silentsoft.org>"]
 readme = "README.md"
@@ -17,7 +17,7 @@ pip-licenses = "^5.5.5"
 
 [tool.poetry.scripts]
 whiscribe = "cli:launch"
-build = "cli:build"
+package = "cli:package"
 
 [tool.flet]
 product = "Whiscribe"
